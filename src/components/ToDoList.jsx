@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import 'boxicons'
+import 'boxicons';
 
 const ToDoList = () => {
     const [storedData, setStoredData] = useState([]);
-    useEffect(() => {
-        const existingData = localStorage.getItem('userData');
-        if (existingData) {
-            setStoredData(JSON.parse(existingData));
-        }
-    }, []);
-
-
     const [taskDetails, setTaskDetails] = useState({
         id: "",
         task: "",
@@ -20,31 +12,32 @@ const ToDoList = () => {
     });
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log("first", e.target.name, e.target.value);
-        setTaskDetails((prevDetails) => ({
-            ...prevDetails,
-            [name]: value,
-        }));
+        if (value.length > 0) {
+            setTaskDetails((prevDetails) => ({
+                ...prevDetails,
+                [name]: value,
+                id: Math.random(),
+            }));
+        }
     }
     const handleSubmit = () => {
-        const newData = [taskDetails, ...storedData];
-        // Store in localStorage
-        localStorage.setItem('userData', JSON.stringify(newData));
-        setStoredData(newData);
-        setTaskDetails({
-            id: "",
-            task: "",
-            dt: "",
-            status: "pending",
-            actions: "edit",
-        });
+        if (taskDetails.task.length > 0 && taskDetails.dt !== "") {
+            const newData = [taskDetails, ...storedData];
+            setStoredData(newData);
+            setTaskDetails({
+                id: "",
+                task: "",
+                dt: "",
+                status: "pending",
+                actions: "edit",
+            });
+        }
     }
 
     // DELETE TASK
     const handleDelete = (id) => {
-        storedData.splice(id, 1);
-        console.log("ddd", storedData);
-        console.log("first", id);
+        const newTodo = storedData.filter((todo) => todo.id !== id);
+        setStoredData(newTodo);
     }
 
     return (
@@ -80,7 +73,7 @@ const ToDoList = () => {
                                             <td>{item.status}</td>
                                             <td><button className="btn btn-warning btn-sm me-1"><box-icon name='edit-alt' size="xs"></box-icon></button>
                                                 <button className="btn btn-success btn-sm me-1"><box-icon name='check' size="xs"></box-icon></button>
-                                                <button className="btn btn-success btn-sm" onClick={() => handleDelete(index)}><box-icon name='trash' size="xs"></box-icon></button>
+                                                <button className="btn btn-success btn-sm" onClick={() => handleDelete(item.id)}><box-icon name='trash' size="xs"></box-icon></button>
 
                                             </td>
                                         </tr>
