@@ -47,15 +47,12 @@ const ToDoList = () => {
         setStoredData(newTodo);
     }
 
-    // const [edit]
     // COMPLETE TASK
     const handleComplete = (id, newStatus) => {
         console.log("if", id, newStatus);
         const updatedTasks = storedData.map(task =>
             task.id === id ? { ...task, status: newStatus } : task
         );
-        // const valSto = storedData.findIndex((e) => e.id === id);
-        // storedData[valSto].status = "Completed";
         setStoredData(updatedTasks);
     }
     return (
@@ -65,12 +62,12 @@ const ToDoList = () => {
                     <div className="card-body">
                         <h1>Todo-List</h1>
                         {msgValue && <h5>Task added successfully</h5>}
-                        <div className="col-md-12">
-                            <input type="text" name="task" className="me-2" value={taskDetails.task} onChange={handleChange} />
-                            <input type="date" name="dt" className="me-2" value={taskDetails.dt} onChange={handleChange} />
+                        <div className="col-md-12 d-flex">
+                            <input type="text" name="task" className="me-2 form-control" value={taskDetails.task} onChange={handleChange} />
+                            <input type="date" name="dt" className="me-2 form-control" value={taskDetails.dt} onChange={handleChange} />
                             <button className="btn btn-warning" onClick={handleSubmit}>+</button>
                         </div>
-                        <div className="col-md-12 d-flex justify-content-between ">
+                        <div className="col-md-12 d-flex justify-content-between my-2   ">
                             <button type="button" className="btn btn-dark">Filter</button>
                             <button type="button" className="btn btn-warning">Delete</button>
                         </div>
