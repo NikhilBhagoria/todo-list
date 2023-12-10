@@ -12,7 +12,7 @@ const ToDoList = () => {
     });
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (value.length > 0) {
+        if (value.length >= 0) {
             setTaskDetails((prevDetails) => ({
                 ...prevDetails,
                 [name]: value,
@@ -31,7 +31,14 @@ const ToDoList = () => {
                 status: "pending",
                 actions: "edit",
             });
+            setTimeout(msgValueChange, 1000);
         }
+    }
+    var msgValue = false;
+
+    const msgValueChange = () => {
+        msgValue = true;
+        console.log("add successfully")
     }
 
     // DELETE TASK
@@ -40,12 +47,24 @@ const ToDoList = () => {
         setStoredData(newTodo);
     }
 
+    // const [edit]
+    // COMPLETE TASK
+    const handleComplete = (id, newStatus) => {
+        console.log("if", id, newStatus);
+        const updatedTasks = storedData.map(task =>
+            task.id === id ? { ...task, status: newStatus } : task
+        );
+        // const valSto = storedData.findIndex((e) => e.id === id);
+        // storedData[valSto].status = "Completed";
+        setStoredData(updatedTasks);
+    }
     return (
         <div className="row ">
             <div className="justify-content-center align-items-center d-flex min-vh-100">
                 <div className="card rounded">
                     <div className="card-body">
                         <h1>Todo-List</h1>
+                        {msgValue && <h5>Task added successfully</h5>}
                         <div className="col-md-12">
                             <input type="text" name="task" className="me-2" value={taskDetails.task} onChange={handleChange} />
                             <input type="date" name="dt" className="me-2" value={taskDetails.dt} onChange={handleChange} />
@@ -72,7 +91,7 @@ const ToDoList = () => {
                                             <td>{item.dt}</td>
                                             <td>{item.status}</td>
                                             <td><button className="btn btn-warning btn-sm me-1"><box-icon name='edit-alt' size="xs"></box-icon></button>
-                                                <button className="btn btn-success btn-sm me-1"><box-icon name='check' size="xs"></box-icon></button>
+                                                <button className="btn btn-success btn-sm me-1" onClick={() => handleComplete(item.id, 'completed')}><box-icon name='check' size="xs"></box-icon></button>
                                                 <button className="btn btn-success btn-sm" onClick={() => handleDelete(item.id)}><box-icon name='trash' size="xs"></box-icon></button>
 
                                             </td>
