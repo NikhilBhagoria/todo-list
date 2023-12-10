@@ -38,7 +38,6 @@ const ToDoList = () => {
 
     const msgValueChange = () => {
         msgValue = true;
-        console.log("add successfully")
     }
 
     // DELETE TASK
@@ -49,7 +48,6 @@ const ToDoList = () => {
 
     // COMPLETE TASK
     const handleComplete = (id, newStatus) => {
-        console.log("if", id, newStatus);
         const updatedTasks = storedData.map(task =>
             task.id === id ? { ...task, status: newStatus } : task
         );
