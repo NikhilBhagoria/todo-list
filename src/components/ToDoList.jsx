@@ -61,7 +61,7 @@ const ToDoList = () => {
                         <h1>Todo-List</h1>
                         {msgValue && <h5>Task added successfully</h5>}
                         <div className="col-md-12 d-flex">
-
+                            {console.log("hello test")}
                             <input type="text" name="task" className="me-2 form-control" value={taskDetails.task} onChange={handleChange} />
                             <input type="date" name="dt" className="me-2 form-control" value={taskDetails.dt} onChange={handleChange} />
                             <button className="btn btn-warning" onClick={handleSubmit}>+</button>
